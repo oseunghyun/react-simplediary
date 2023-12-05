@@ -2,6 +2,7 @@ import './App.css';
 import DiaryEditor from './DiaryEditor';
 import DiaryList from './DiaryList';
 import { useState, useRef, useEffect, useMemo } from 'react';
+import OptimizeTest from './OptimizeTest';
 
 function App() {
 
@@ -11,7 +12,6 @@ function App() {
 
   const getData = async()=> {
     const res = await fetch('https://jsonplaceholder.typicode.com/comments').then((res)=>res.json());
-    console.log(res);
 
     const initData = res.slice(0,20).map((it) => {
       return {
@@ -44,9 +44,7 @@ function App() {
   };
 
   const onRemove = (targetId) => {
-    console.log(`${targetId}가 삭제되었습니다.`);
     const newDiaryList = data.filter((it) => it.id !== targetId);
-    console.log(newDiaryList);
     setData(newDiaryList);
   }
 
@@ -59,8 +57,6 @@ function App() {
   // useMemo 사용하면 더이상 함수 호출이 아니라 값
   const getDiaryAnalysis = useMemo(
     () => {
-    console.log("일기 분석 시작")
-
     const goodCount = data.filter((it) => it.emotion >= 3).length;
     const badCount = data.length - goodCount;
     const goodRatio = (goodCount/data.length)*100;
@@ -73,6 +69,7 @@ function App() {
 
   return (
     <div className="App">
+      <OptimizeTest/>
       <DiaryEditor onCreate={onCreate}/>
       <div>전체 일기 : {data.length}</div>
       <div>기분 좋은 일기 개수 : {goodCount}</div>
