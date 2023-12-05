@@ -1,13 +1,19 @@
-import {useState, useRef} from "react";
+import React,{useState, useRef, useEffect} from "react";
 
-const DiaryItem = ({author, content, created_date, emotion, id, onRemove, onEdit}) => {
+const DiaryItem = ({
+    author, 
+    content, 
+    created_date, 
+    emotion, 
+    id, 
+    onRemove, 
+    onEdit
+}) => {
 
     const handleRemove = () => {
         if(window.confirm(`${id}번째 일기를 삭제하시겠습니까?`)){
             onRemove(id);
         }
-        
-        console.log(id);
     }
 
     const [isEdit, setIsEdit] = useState(false);
@@ -55,4 +61,4 @@ const DiaryItem = ({author, content, created_date, emotion, id, onRemove, onEdit
     </div>
 };
 
-export default DiaryItem;
+export default React.memo(DiaryItem);
